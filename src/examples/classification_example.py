@@ -2,9 +2,10 @@
 import numpy as np
 import scipy.io
 from sklearn.preprocessing import OneHotEncoder
-
+import sys
+sys.path.append('../')
 # Custom imports
-from modules import RC_model
+from util.modules import RC_model
 
 # ============ RC model configuration and hyperparameter values ============
 config = {}
@@ -51,7 +52,7 @@ config['nonlinearity'] = 'relu'         # type of activation function {'relu', '
 print(config)
 
 # ============ Load dataset ============
-data = scipy.io.loadmat('../dataset/'+config['dataset_name']+'.mat')
+data = scipy.io.loadmat('../../dataset/'+config['dataset_name']+'.mat')
 Xtr = data['X']  # shape is [N,T,V]
 if len(Xtr.shape) < 3:
     Xtr = np.atleast_3d(Xtr)

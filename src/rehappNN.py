@@ -4,7 +4,7 @@ import scipy.io
 from sklearn.preprocessing import OneHotEncoder
 
 # Custom imports
-from modules import RC_model
+from util.modules import RC_model
 # ============ RC model configuration and hyperparameter values ============
 config = {}
 config['dataset_name'] = 'ESNN5np564Both042621'

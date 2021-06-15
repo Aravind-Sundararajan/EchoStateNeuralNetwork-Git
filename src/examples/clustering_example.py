@@ -1,4 +1,7 @@
 # General imports
+import sys
+sys.path.append('../')
+
 import numpy as np
 import scipy.io
 import matplotlib.pyplot as plt
@@ -12,7 +15,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.metrics import v_measure_score
 
 # Custom imports
-from modules import RC_model
+from util.modules import RC_model
 
 # Set the colormap for the histogram plot
 cmap = cm.tab20(np.linspace(0, 1, 12))
@@ -46,7 +49,7 @@ config['w_ridge_embedding'] = 10.0      # regularization parameter of the ridge 
 config['readout_type'] = None           # by setting None, the input representations will be stored
 
 dataset_name = 'jpVow'
-data = scipy.io.loadmat('../dataset/'+dataset_name+'.mat')
+data = scipy.io.loadmat('../../dataset/'+dataset_name+'.mat')
 X = data['X']  # shape is [N,T,V]
 if len(X.shape) < 3:
     X = np.atleast_3d(X)
