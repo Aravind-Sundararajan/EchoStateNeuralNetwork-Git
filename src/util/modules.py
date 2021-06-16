@@ -168,6 +168,17 @@ class RC_model(object):
             else:
                 raise RuntimeError('Invalid readout type')
 
+    #repr
+    def __repr__(self):
+        return " rc model{"           + \
+        str(self.n_drop) + ","       + \
+        str(self.bidir) + ","        + \
+        str(self.dimred_method) + ","+ \
+        str(self.mts_rep) + ","      + \
+        str(self.readout_type) + "," + \
+        str(self.svm_gamma) + "} \n " +\
+        str(self._reservoir)
+
 
     def train(self, X, Y=None):
 
@@ -315,7 +326,7 @@ class RC_model(object):
         return accuracy, f1
 
 
-    def predictions(self, Xte, Yte):
+    def predictions(self, Xte):
 
         # ============ Compute reservoir states ============
         res_states_te = self._reservoir.get_states(Xte, n_drop=self.n_drop, bidir=self.bidir)
@@ -382,7 +393,6 @@ class RC_model(object):
             pred_class = self.readout.predict(input_repr_te)
             pred_class = np.argmax(pred_class, axis=1)
 
-        accuracy, f1 = compute_test_scores(pred_class, Yte)
         return pred_class
 
 

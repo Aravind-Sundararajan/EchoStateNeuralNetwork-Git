@@ -10,7 +10,7 @@ from scipy import sparse
 class Reservoir(object):
     """
     Build a reservoir and evaluate internal states
-    
+
     Parameters:
         n_internal_units = processing units in the reservoir
         spectral_radius = largest eigenvalue of the reservoir matrix of connection weights
@@ -20,10 +20,10 @@ class Reservoir(object):
         noise_level = deviation of the Gaussian noise injected in the state update
         circle = generate determinisitc reservoir with circle topology
     """
-    
+
     def __init__(self, n_internal_units=100, spectral_radius=0.99, leak=None,
                  connectivity=0.3, input_scaling=0.2, noise_level=0.01, circle=False):
-        
+
         # Initialize attributes
         self._n_internal_units = n_internal_units
         self._input_scaling = input_scaling
@@ -44,23 +44,32 @@ class Reservoir(object):
                 connectivity,
                 spectral_radius)
 
+    def __repr__(self):
+        return "reservoir{" + \
+                str(self._n_internal_units) + "," + \
+                str(self._input_scaling) + "," + \
+                str(self._noise_level) + "," + \
+                str(self._leak) + "," + \
+                str(self._input_weights.shape)  + "," + \
+                str(self._internal_weights.shape) + "}"
+
 
     def _initialize_internal_weights_Circ(self, n_internal_units, spectral_radius):
-        
+
         # Construct reservoir with circular topology
         internal_weights = np.zeros((n_internal_units, n_internal_units))
         internal_weights[0,-1] = 1.0
         for i in range(n_internal_units-1):
             internal_weights[i+1,i] = 1.0
-            
+
         # Adjust the spectral radius.
         E, _ = np.linalg.eig(internal_weights)
         e_max = np.max(np.abs(E))
-        internal_weights /= np.abs(e_max)/spectral_radius 
-                
+        internal_weights /= np.abs(e_max)/spectral_radius
+
         return internal_weights
-    
-    
+
+
     def _initialize_internal_weights(self, n_internal_units,
                                      connectivity, spectral_radius):
 
@@ -71,11 +80,11 @@ class Reservoir(object):
 
         # Ensure that the nonzero values are uniformly distributed in [-0.5, 0.5]
         internal_weights[np.where(internal_weights > 0)] -= 0.5
-        
+
         # Adjust the spectral radius.
         E, _ = np.linalg.eig(internal_weights)
         e_max = np.max(np.abs(E))
-        internal_weights /= np.abs(e_max)/spectral_radius       
+        internal_weights /= np.abs(e_max)/spectral_radius
 
         return internal_weights
 
@@ -116,7 +125,7 @@ class Reservoir(object):
 
         # compute sequence of reservoir states
         states = self._compute_state_matrix(X, n_drop)
-    
+
         # reservoir states on time reversed input
         if bidir is True:
             X_r = X[:, ::-1, :]
@@ -124,10 +133,3 @@ class Reservoir(object):
             states = np.concatenate((states, states_r), axis=2)
 
         return states
-
-
-# In[ ]:
-
-
-
-

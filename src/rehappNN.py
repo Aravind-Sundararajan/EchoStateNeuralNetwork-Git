@@ -1,4 +1,5 @@
 # General imports
+import  pickle
 import numpy as np
 import scipy.io
 from sklearn.preprocessing import OneHotEncoder
@@ -97,4 +98,7 @@ print('Training time = %.2f seconds'%tr_time)
 accuracy, f1 = classifier.test(Xte, Yte)
 print('Accuracy = %.3f, F1 = %.3f'%(accuracy, f1))
 
-classifier.predictions(Xte, Yte)
+#pickle the model so we don't have to regenerate it
+pickleFile = open("../output/" + config['dataset_name'] + ".txt", 'wb')
+pickle.dump(classifier,pickleFile)
+pickleFile.close()
