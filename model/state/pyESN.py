@@ -1,6 +1,5 @@
 import numpy as np
 
-
 def correct_dimensions(s, targetlength):
     """checks the dimensionality of some numeric argument s, broadcasts it
        to the specified length if possible.

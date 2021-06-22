@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[6]:
-
-
 # General imports
 import numpy as np
 import time
@@ -15,8 +9,8 @@ from sklearn.neural_network import MLPClassifier
 from scipy.spatial.distance import pdist, cdist, squareform
 
 # Custom imports
-from .reservoir import Reservoir
-from .tensorPCA import tensorPCA
+from echostate.model.state.reservoir import Reservoir
+from echostate.model.state.tensorPCA import tensorPCA
 
 
 def compute_test_scores(pred_class, Yte):
@@ -394,6 +388,3 @@ class RC_model(object):
             pred_class = np.argmax(pred_class, axis=1)
 
         return pred_class
-
-
-# In[ ]:
